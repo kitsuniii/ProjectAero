@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Project Aero | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #aee1f9, #dfffd8);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .floating {
+      position: absolute;
+      animation: float 10s ease-in-out infinite;
+      opacity: 0.5;
+      width: 80px;
+    }
+    .floating:nth-of-type(1) {
+      top: 5%; left: 5%;
+      animation-delay: 0s;
+    }
+    .floating:nth-of-type(2) {
+      top: 70%; left: 90%;
+      animation-delay: 2s;
+    }
+    .floating:nth-of-type(3) {
+      top: 40%; left: 30%;
+      animation-delay: 4s;
+    }
+    .floating:nth-of-type(4) {
+      top: 20%; left: 75%;
+      animation-delay: 1s;
+    }
+    .floating:nth-of-type(5) {
+      top: 80%; left: 10%;
+      animation-delay: 3s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 relative">
+
+  <!-- Background Floating Icons -->
+  <img src="https://img.icons8.com/ios-filled/100/cloud.png" class="floating" alt="cloud" />
+  <img src="https://img.icons8.com/ios-filled/100/water.png" class="floating" alt="water" />
+  <img src="https://img.icons8.com/ios-filled/100/tree.png" class="floating" alt="tree" />
+  <img src="https://img.icons8.com/ios-filled/100/leaf.png" class="floating" alt="leaf" />
+  <img src="https://img.icons8.com/ios-filled/100/rain.png" class="floating" alt="rain" />
+
+  <!-- Glass Container -->
+  <div class="glass w-full max-w-4xl p-10 shadow-2xl text-center space-y-8 z-10">
+    <h1 class="text-5xl font-bold text-sky-700">Top text 🌿</h1>
+    <p class="text-xl text-gray-800">Fixed paragraphed text.</p>
+
+    <div class="grid grid-cols-3 gap-6">
+      <div class="glass p-6 rounded-2xl shadow hover:scale-105 transition">
+        <img src="https://img.icons8.com/ios-filled/50/cloud.png" alt="svg1" class="mx-auto opacity-80"/>
+        <p class="mt-2 text-sm text-white">svg1</p>
+      </div>
+      <div class="glass p-6 rounded-2xl shadow hover:scale-105 transition">
+        <img src="https://img.icons8.com/ios-filled/50/water.png" alt="svg2" class="mx-auto opacity-80"/>
+        <p class="mt-2 text-sm text-white">svg2</p>
+      </div>
+      <div class="glass p-6 rounded-2xl shadow hover:scale-105 transition">
+        <img src="https://img.icons8.com/ios-filled/50/tree.png" alt="svg3" class="mx-auto opacity-80"/>
+        <p class="mt-2 text-sm text-white">svg3</p>
+      </div>
+    </div>
+
+    <button class="bg-sky-500 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-xl transition">Explore</button>
+  </div>
+
+  <!-- BG Musica -->
+  <audio id="bg-music" autoplay></audio>
+  <script>
+    const songs = [
+      'mp1',
+      'mp2',
+      'mp3'
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    const shuffled = shuffle([...songs]);
+    let currentTrack = 0;
+    const audio = document.getElementById('bg-music');
+    audio.src = shuffled[currentTrack];
+    audio.load();
+
+    window.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play().catch(() => {});
+      }
+    }, { once: true });
+
+    audio.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % shuffled.length;
+      audio.src = shuffled[currentTrack];
+      audio.load();
+      audio.play().catch(() => {});
+    });
+  </script>
+
+</body>
+</html>
